@@ -9,10 +9,13 @@ HTML = """
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>A Little Invitation 💙</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
@@ -21,86 +24,112 @@ body {
     color: white;
     text-align: center;
     background: linear-gradient(135deg, #020817, #101b46, #29164d);
-    background-attachment: fixed;
     overflow-x: hidden;
+}
+
+.star {
+    position: fixed;
+    color: #c7d8ff;
+    animation: twinkle 2s infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes twinkle {
+    from { opacity: .2; }
+    to { opacity: 1; }
 }
 
 .container {
     width: 90%;
-    max-width: 650px;
-    margin: 45px auto;
-    padding: 28px 20px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.2);
+    max-width: 600px;
+    margin: 65px auto;
+    padding: 35px 22px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid #a9c4ff55;
     border-radius: 25px;
-    box-shadow: 0 0 35px #536dfe44;
+    box-shadow: 0 0 35px #536dfe55;
 }
 
-h1 { color: #c7d8ff; }
+h1 {
+    color: #c7d8ff;
+    font-size: 32px;
+}
+
+p {
+    line-height: 1.8;
+}
 
 .subtitle {
     color: #d9dcff;
-    line-height: 1.7;
 }
 
 button {
     border: none;
     border-radius: 30px;
-    padding: 13px 25px;
-    margin: 9px;
+    padding: 14px 28px;
+    margin: 12px;
     font-size: 16px;
     cursor: pointer;
+    transition: .2s;
 }
 
 .yes {
-    background: #9bbaff;
+    background: #a9c4ff;
     color: #07132f;
+}
+
+.yes:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px #a9c4ff;
 }
 
 .no {
     background: #e3e5f5;
     color: #222;
+    position: relative;
 }
 
-.gallery {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 25px 0;
+#response {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    background: #ffffff12;
+    border-radius: 18px;
+    animation: appear .7s ease;
 }
 
-.gallery img {
-    width: 100%;
-    border-radius: 15px;
-    object-fit: cover;
-    border: 2px solid #a9c4ff;
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .letter {
     display: none;
     text-align: left;
     line-height: 1.8;
-    background: #ffffff12;
     padding: 20px;
+    margin-top: 20px;
+    background: #ffffff12;
     border-radius: 15px;
-    margin-top: 20px;
-}
-
-#response {
-    margin-top: 20px;
-    color: #c7d8ff;
-    line-height: 1.7;
 }
 
 footer {
-    margin-top: 30px;
-    color: #aab8e8;
+    margin-top: 35px;
     font-size: 13px;
+    color: #aab8e8;
 }
+
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
     <div style="font-size:45px">🌙 💙 ✨</div>
@@ -118,15 +147,28 @@ footer {
         I have something special I want to ask you.
     </p>
 
-    <div class="gallery">
-        <img src="/static/photo1.jpg" alt="Our first picture">
-        <img src="/static/photo2.jpg" alt="Our second picture">
+    <div>
+        <button class="yes" onclick="sayYes()">
+            YES! 💙
+        </button>
+
+        <button class="no" id="noButton"
+                onmouseenter="moveNo()"
+                ontouchstart="moveNo()"
+                onclick="moveNo()">
+            NO
+        </button>
     </div>
 
-    <button class="yes" onclick="sayYes()">YES! 💙</button>
-    <button class="no" onclick="sayNo()">NO</button>
-
-    <div id="response"></div>
+    <div id="response">
+        <h2>YIPPEEEEE! YIPPEEEEE! 🎉💙</h2>
+        <h3>FINALLY! I'VE BEEN WAITING FOR THIS!</h3>
+        <p>
+            You just made my day so much better.
+            I can't believe you said YES! 🥹💙
+        </p>
+        <p>So... it's a date? 🌙</p>
+    </div>
 
     <br>
 
@@ -135,6 +177,7 @@ footer {
     </button>
 
     <div class="letter" id="letter">
+
         <h3>Dear Christian, 💙</h3>
 
         <p>
@@ -144,9 +187,9 @@ footer {
 
         <p>
         I care about you more than I can easily explain.
-        Even the little conversations, the random moments,
-        and the simplest things about you have become
-        special to me.
+        Even the little conversations, random moments,
+        and simplest things about you have become special
+        to me.
         </p>
 
         <p>
@@ -170,31 +213,52 @@ footer {
         With lots of care,<br>
         <b>Xiannnn😛 💙</b>
         </p>
+
     </div>
 
     <footer>
-        Made with care • A little midnight-blue surprise ✨
+        Made with care • A midnight-blue surprise ✨
     </footer>
 
 </div>
 
 <script>
+
 function sayYes() {
-    document.getElementById("response").innerHTML =
-    "YIPPEEEEE! YIPPEEEEE! 💙🎉<br>" +
-    "Thank you for saying YES!";
+    document.getElementById("response").style.display = "block";
+    document.getElementById("noButton").style.display = "none";
 }
 
-function sayNo() {
-    document.getElementById("response").innerHTML =
-    "That's okay. Thank you for being honest. 💙";
+function moveNo() {
+    const button = document.getElementById("noButton");
+
+    const maxX = Math.max(0, window.innerWidth - button.offsetWidth - 20);
+    const maxY = Math.max(0, window.innerHeight - button.offsetHeight - 20);
+
+    button.style.position = "fixed";
+    button.style.left = Math.random() * maxX + "px";
+    button.style.top = Math.random() * maxY + "px";
+    button.style.zIndex = "999";
 }
 
 function showLetter() {
     const letter = document.getElementById("letter");
+
     letter.style.display =
         letter.style.display === "block" ? "none" : "block";
 }
+
+// Create decorative stars
+for (let i = 0; i < 45; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.innerHTML = "✦";
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.top = Math.random() * 100 + "vh";
+    star.style.animationDelay = Math.random() * 2 + "s";
+    document.body.appendChild(star);
+}
+
 </script>
 
 </body>
@@ -207,5 +271,3 @@ def home():
 
 if __name__ == "__main__":
     app.run()
-
-                    
